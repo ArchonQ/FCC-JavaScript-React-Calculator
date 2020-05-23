@@ -3,7 +3,7 @@ import './App.css';
 // import { openSync } from 'fs';
 
 const nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
-const op = ['/', '*', '-', '+', '='];
+const op = ['/', '×', '-', '+', '='];
 
 function App() {
 	return (
@@ -12,11 +12,13 @@ function App() {
 				1500
 			</div>
 			<div className='nums-container'>
+				<button className='big-h light-grey ac'>AC</button>
 				{nums.map((num) => (
 					<button className={`dark-grey ${num === 0 && 'big-h'}`} key={num}>
 						{num}
 					</button>
 				))}
+				<button className='light-grey'>.</button>
 			</div>
 			<div className='ops-container'>
 				{op.map((op) => (
