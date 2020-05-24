@@ -9,11 +9,12 @@ class App extends React.Component {
 		lastPressed: undefined,
 		currentNumber: '0',
 		prevNumber: undefined,
+		operation: undefined,
 	};
 
 	handleClick = (e) => {
+		const { currentNumber, prevNumber, operation } = this.state;
 		const { innerText } = e.target;
-		const { lastPressed, currentNumber, prevNumber } = this.state;
 
 		if (!Number.isNaN(Number(innerText))) {
 			if (currentNumber === '0') {
@@ -25,6 +26,7 @@ class App extends React.Component {
 					currentNumber: currentNumber + innerText,
 				});
 			}
+			return;
 		}
 
 		switch (innerText) {
@@ -32,6 +34,7 @@ class App extends React.Component {
 				this.setState({
 					currentNumber: '0',
 					prevNumber: undefined,
+					operation: undefined,
 				});
 				break;
 			}
@@ -43,11 +46,23 @@ class App extends React.Component {
 				}
 				break;
 			}
+			default: {
+				if (!operation) {
+					this.setState({
+						operation: innerText,
+						prevNumber: currentNumber,
+						currentNumber: '',
+					});
+				} else {
+					const evalued = eval(`${prevNumber} ${operation} ${currentNumber}`);
+					this.setState({
+						operation: innerText,
+						prevNumber: evalued,
+						currentNumber: innerText === '=' ? evalued : '0',
+					});
+				}
+			}
 		}
-
-		this.setState({
-			lastPressed: innerText,
-		});
 	};
 
 	render() {
