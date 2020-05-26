@@ -17,7 +17,7 @@ body {
 .calculator {
 	width: 250px;
 	background-color: #111;
-	height: 380px;
+	height: 390px;
 	display: flex;
 	flex-wrap: wrap;
 	padding: 5px;
@@ -29,7 +29,18 @@ body {
 	width: 100%;
 	text-align: right;
 	color: #fff;
-	padding: 10px;
+	padding: 20px 10px;
+
+	height: 70px;
+	position: relative;
+}
+
+.display small {
+	color: #ee9406;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 12px;
 }
 
 .nums-container {
