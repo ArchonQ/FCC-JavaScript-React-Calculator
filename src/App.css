@@ -35,13 +35,13 @@ body {
 	position: relative;
 }
 
-.display small {
+/* .display small {
 	color: #ee9406;
 	position: absolute;
 	top: 5px;
 	right: 5px;
 	font-size: 12px;
-}
+} */
 
 .nums-container {
 	width: 75%;

@@ -2,126 +2,62 @@ import React from 'react';
 import './App.css';
 
 const nums = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
-const op = ['/', '*', '-', '+', '='];
+const ops = ['/', '*', '-', '+', '='];
 
 class App extends React.Component {
 	state = {
 		lastPressed: undefined,
-		currentNumber: '0',
-		calc: undefined,
+		calc: '0',
 		operation: undefined,
 	};
 
 	handleClick = (e) => {
-		const { calc, currentNumber } = this.state;
+		const { calc, lastPressed } = this.state;
 		const { innerText } = e.target;
-
-		this.setState({
-			calc: currentNumber + innerText,
-			currentNumber: currentNumber + innerText,
-			lastPressed: innerText,
-		});
 
 		switch (innerText) {
 			case 'AC': {
 				this.setState({
-					currentNumber: '0',
-					calc: undefined,
+					calc: '0',
 				});
 				break;
 			}
 			case '=': {
 				const evaluated = eval(calc);
 				this.setState({
-					currentNumber: evaluated,
 					calc: evaluated,
 				});
 				break;
 			}
 			default: {
-				const e = currentNumber === '0' ? innerText : currentNumber + innerText;
+				let e = undefined;
+				if (ops.includes(innerText)) {
+					if (ops.includes(lastPressed)) {
+						e = calc.slice(0, -3) + ` ${innerText} `;
+					} else {
+						e = `${calc} ${innerText} `;
+					}
+				} else {
+					e = calc === '0' ? innerText : calc + innerText;
+				}
+
 				this.setState({
 					calc: e,
-					currentNumber: e,
 					lastPressed: innerText,
 				});
 			}
 		}
-
-		// const { currentNumber, calc, operation, lastPressed } = this.state;
-		// const { innerText } = e.target;
-		// this.setState({
-		// 	lastPressed: innerText,
-		// });
-		// if (!Number.isNaN(Number(innerText))) {
-		// 	if (currentNumber === '0') {
-		// 		this.setState({
-		// 			currentNumber: innerText,
-		// 		});
-		// 	} else if (openSync.includes(lastPressed)) {
-		// 		this.setState({
-		// 			currentNumber: innerText,
-		// 		});
-		// 	} else {
-		// 		this.setState({
-		// 			currentNumber: currentNumber + innerText,
-		// 		});
-		// 	}
-		// 	return;
-		// }
-		// switch (innerText) {
-		// 	case 'AC': {
-		// 		this.setState({
-		// 			currentNumber: '0',
-		// 			calc: undefined,
-		// 			operation: undefined,
-		// 		});
-		// 		break;
-		// 	}
-		// 	case '.': {
-		// 		if (!currentNumber.includes('.')) {
-		// 			this.setState({
-		// 				currentNumber: currentNumber + innerText,
-		// 			});
-		// 		}
-		// 		break;
-		// 	}
-		// 	default: {
-		// 		if (!operation) {
-		// 			this.setState({
-		// 				operation: innerText,
-		// 				calc: currentNumber,
-		// 				currentNumber: '',
-		// 			});
-		// 		} else if (innerText === '=') {
-		// 			const evaluated = eval(`${calc} ${operation} ${currentNumber}`);
-		// 			this.setState({
-		// 				operation: undefined,
-		// 				calc: evaluated,
-		// 				currentNumber: evaluated,
-		// 			});
-		// 		} else {
-		// 			const evaluated = eval(`${calc} ${operation} ${currentNumber}`);
-		// 			this.setState({
-		// 				operation: innerText,
-		// 				calc: evaluated,
-		// 				currentNumber: evaluated,
-		// 			});
-		// 		}
-		// 	}
-		// }
 	};
 
 	render() {
-		const { currentNumber, calc } = this.state;
+		const { calc } = this.state;
 		return (
 			<div className='calculator'>
 				<p style={{ position: 'absolute', top: 0 }}>
 					{JSON.stringify(this.state, null, 2)}
 				</p>
 				<div id='display' className='display'>
-					<small>{calc}</small>
-					{currentNumber}
+					{calc}
 				</div>
 				<div className='nums-container'>
 					<button className='big-h light-grey ac' onClick={this.handleClick}>
@@ -141,9 +77,9 @@ class App extends React.Component {
 					</button>
 				</div>
 				<div className='ops-container'>
-					{op.map((op) => (
-						<button className='orange' key={op} onClick={this.handleClick}>
-							{op}
+					{ops.map((ops) => (
+						<button className='orange' key={ops} onClick={this.handleClick}>
+							{ops}
 						</button>
 					))}
 				</div>
