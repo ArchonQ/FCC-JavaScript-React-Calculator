@@ -28,13 +28,22 @@ class App extends React.Component {
 					currentNumber: '0',
 					calc: undefined,
 				});
-				return;
+				break;
 			}
 			case '=': {
 				const evaluated = eval(calc);
 				this.setState({
 					currentNumber: evaluated,
 					calc: evaluated,
+				});
+				break;
+			}
+			default: {
+				const e = currentNumber === '0' ? innerText : currentNumber + innerText;
+				this.setState({
+					calc: e,
+					currentNumber: e,
+					lastPressed: innerText,
 				});
 			}
 		}
