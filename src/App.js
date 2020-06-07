@@ -31,8 +31,9 @@ class App extends React.Component {
 			}
 			default: {
 				let e = undefined;
+				// check for other op
 				if (ops.includes(innerText)) {
-					if (ops.includes(lastPressed)) {
+					if (ops.includes(lastPressed) && innerText !== '-') {
 						e = calc.slice(0, -3) + ` ${innerText} `;
 					} else {
 						e = `${calc} ${innerText} `;
