@@ -61,7 +61,13 @@ class App extends React.Component {
 				// check for other op
 				if (ops.includes(innerText)) {
 					if (ops.includes(lastPressed) && innerText !== '-') {
-						e = calc.slice(0, -3) + ` ${innerText} `;
+						// not pretty but it works
+						const lastNumberIdx = calc
+							.split('')
+							.reverse()
+							.findIndex((char) => char !== ' ' && nums.includes(+char));
+
+						e = calc.slice(0, calc.length - lastNumberIdx) + ` ${innerText} `;
 					} else {
 						e = `${calc} ${innerText} `;
 					}
