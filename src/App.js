@@ -29,6 +29,17 @@ class App extends React.Component {
 				});
 				break;
 			}
+			case '.': {
+				const splitted = calc.split(/[\+\-\*\/]/);
+				const last = splitted.slice(-1)[0];
+
+				if (!last.includes('.')) {
+					this.setState({
+						calc: calc + '.',
+					});
+				}
+				break;
+			}
 			default: {
 				let e = undefined;
 				// check for other op
@@ -44,10 +55,12 @@ class App extends React.Component {
 
 				this.setState({
 					calc: e,
-					lastPressed: innerText,
 				});
 			}
 		}
+		this.setState({
+			lastPressed: innerText,
+		});
 	};
 
 	render() {
